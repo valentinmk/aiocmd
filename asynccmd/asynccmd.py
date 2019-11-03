@@ -92,8 +92,11 @@ class Cmd:
             except KeyboardInterrupt:
                 print("Cmd._start_controller stop loop. Bye.")
                 self.loop.stop()
-                pending = asyncio.Task.all_tasks(loop=self.loop)
-                print(asyncio.Task.all_tasks(loop=self.loop))
+                if sys.version_info >= (3, 8, 0):
+                    pending = asyncio.all_tasks(loop=self.loop)
+                else:
+                    pending = asyncio.Task.all_tasks(loop=self.loop)
+                print(pending)
                 for task in pending:
                     task.cancel()
                     with suppress(asyncio.CancelledError):

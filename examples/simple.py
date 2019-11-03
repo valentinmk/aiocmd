@@ -17,7 +17,11 @@ class SimpleCommander(Cmd):
         :param arg: contain args that go after command
         :return: None
         """
-        for task in asyncio.Task.all_tasks(loop=self.loop):
+        if sys.version_info >= (3, 8, 0):
+            pending = asyncio.all_tasks(loop=self.loop)
+        else:
+            pending = asyncio.Task.all_tasks(loop=self.loop)
+        for task in pending:
             print(task)
 
     def start(self, loop=None):
