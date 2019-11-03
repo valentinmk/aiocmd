@@ -101,7 +101,11 @@ class Commander(Cmd):
             self.aiohttp_servers = aiohttp_servers
 
     def do_tasks(self, arg):
-        for task in asyncio.Task.all_tasks(loop=self.loop):
+        if sys.version_info >= (3, 8, 0):
+            pending = asyncio.all_tasks(loop=self.loop)
+        else:
+            pending = asyncio.Task.all_tasks(loop=self.loop)
+        for task in pending:
             print(task)
 
     def start(self, loop=None):
@@ -125,7 +129,10 @@ except KeyboardInterrupt:
     pass
 finally:
     loop.stop()
-    pending = asyncio.Task.all_tasks(loop=loop)
+    if sys.version_info >= (3, 8, 0):
+        pending = asyncio.all_tasks(loop=self.loop)
+    else:
+        pending = asyncio.Task.all_tasks(loop=self.loop)
     for task in pending:
         task.cancel()
         with suppress(asyncio.CancelledError):
