@@ -3,6 +3,10 @@
 [![PyPI version](https://badge.fury.io/py/asynccmd.svg)](https://badge.fury.io/py/asynccmd)
 [![PyPI](https://img.shields.io/pypi/status/asynccmd.svg)](https://img.shields.io/pypi/status/asynccmd.svg)
 
+# WHY THIS FORK?
+
+I want to use this package with Python 3.8, and there is at least one issue, a deprication warning for the use of Task.all_tasks()
+
 
 # asynccmd
 
